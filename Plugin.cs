@@ -3,20 +3,16 @@ using Dalamud.Game.ClientState;
 using Dalamud.Game.ClientState.Fates;
 using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
-using Dalamud.Game.Text;
-using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface.Windowing;
-using Dalamud.Logging;
 using Dalamud.Plugin;
-using EmiThingsPlugin.Attributes;
 using Lumina.Excel.GeneratedSheets;
 using System;
-using System.Linq;
-using XivCommon;
+using System.Runtime.Versioning;
 
 namespace EmiThingsPlugin
 {
-    public class Plugin : IDalamudPlugin
+    [SupportedOSPlatform("windows")]
+    public partial class Plugin : IDalamudPlugin
     {
         private readonly DalamudPluginInterface pluginInterface;
         private readonly ChatGui chat;
@@ -39,34 +35,19 @@ namespace EmiThingsPlugin
             Framework framework)
         {
             this.pluginInterface = pi;
-            this.chat = chat;
-            this.clientState = clientState;
-            this.fateTable = fateTable;
-            this.framework = framework;
+            this.chat            = chat;
+            this.clientState     = clientState;
+            this.fateTable       = fateTable;
+            this.framework       = framework;
 
-            clientState.CfPop += ClientState_CfPop;
+            this.clientState.CfPop += ClientState_CfPop;
 
-            // Get or create a configuration object
-            this.config = (Configuration)this.pluginInterface.GetPluginConfig()
-                          ?? this.pluginInterface.Create<Configuration>();
-
-            // Initialize the UI
+            this.config = (Configuration) pluginInterface.GetPluginConfig() ?? this.pluginInterface.Create<Configuration>();
             this.windowSystem = new WindowSystem(typeof(Plugin).AssemblyQualifiedName);
-
-            var window = this.pluginInterface.Create<PluginWindow>(this.config);
-
-
-            if (window is not null)
-            {
-                this.windowSystem.AddWindow(window);
-            }
-
-            this.pluginInterface.UiBuilder.Draw += this.windowSystem.Draw;
-
-            // Load all of our commands
             this.commandManager = new PluginCommandManager<Plugin>(this, commands);
 
-            framework.Update += Framework_Update;
+            InitUI();
+            InitEvents();
         }
 
         private void Framework_Update(Framework framework)
@@ -82,52 +63,28 @@ namespace EmiThingsPlugin
             }
         }
 
-        [Command("/example1")]
-        [HelpMessage("Example help message.")]
-        public void ExampleCommand1(string command, string args)
+        
+
+        #region Private functions
+
+        private void InitUI()
         {
-            // You may want to assign these references to private variables for convenience.
-            // Keep in mind that the local player does not exist until after logging in.
-            var world = this.clientState.LocalPlayer?.CurrentWorld.GameData;
+            var window = this.pluginInterface.Create<PluginWindow>(this.config);
 
-            //this.chat.Print($"Hello, {world?.Name}!");
-            //PluginLog.Log("Message sent successfully.");
-
-            Window pluginWindow = this.windowSystem.Windows.First(w => w.WindowName.Equals(PluginWindow.WindowName));
-
-            if (!pluginWindow.IsOpen)
-                pluginWindow.Toggle();
-        }
-
-        [Command("/example2")]
-        [HelpMessage("Example 2 help message")]
-        public void Example2Command(string commands, string args)
-        {
-            this.chat.Print($"Hello {this.clientState.LocalPlayer.Name} du serveur {this.clientState.LocalPlayer.HomeWorld.GameData.Name}");
-        }
-
-        [Command("/testChat")]
-        [HelpMessage("test")]
-        public void TestChat(string commands, string args)
-        {
-            this.chat.Print($"commands: {commands}");
-            this.chat.Print($"args: {args}");
-
-            using (var xivcommonbase = new XivCommonBase())
+            if (window is not null)
             {
-                xivcommonbase.Functions.Chat.SendMessage("/afk");
-
-                string sanitizedText = xivcommonbase.Functions.Chat.SanitiseText(args);
-                xivcommonbase.Functions.Chat.SendMessage($"/p {sanitizedText}");
+                this.windowSystem.AddWindow(window);
             }
+
+            this.pluginInterface.UiBuilder.Draw += this.windowSystem.Draw;
         }
 
-        [Command("/testConfig")]
-        public void TestConfig(string commands, string args)
+        private void InitEvents()
         {
-            this.chat.Print($"TestString: {this.config.TestString}");
-            // this.config.CoolText = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); // rewrite the config without needing to save
+            framework.Update += Framework_Update;
         }
+
+        #endregion
 
 
         #region IDisposable Support
