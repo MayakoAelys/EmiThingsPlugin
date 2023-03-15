@@ -5,9 +5,12 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using EmiThingsPlugin.Windows;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Runtime.Versioning;
+using XivCommon;
+using XivCommon.Functions;
 
 namespace EmiThingsPlugin
 {
@@ -23,6 +26,11 @@ namespace EmiThingsPlugin
         private readonly WindowSystem windowSystem;
         private readonly FateTable fateTable;
         private readonly Framework framework;
+        private readonly SigScanner SigScanner;
+
+
+        protected XivCommonBase XIVCommonBase;
+        protected Chat XIVChat;
 
         public string Name => "Emi things and tests";
 
@@ -32,13 +40,18 @@ namespace EmiThingsPlugin
             ChatGui chat,
             ClientState clientState,
             FateTable fateTable,
-            Framework framework)
+            Framework framework,
+            SigScanner sigScanner)
         {
             this.pluginInterface = pi;
             this.chat            = chat;
             this.clientState     = clientState;
             this.fateTable       = fateTable;
             this.framework       = framework;
+            this.SigScanner      = sigScanner;
+
+            this.XIVCommonBase = new XivCommonBase();
+            this.XIVChat = this.XIVCommonBase.Functions.Chat;
 
             this.clientState.CfPop += ClientState_CfPop;
 
@@ -48,11 +61,13 @@ namespace EmiThingsPlugin
 
             InitUI();
             InitEvents();
+
+            InitAutoFateSync();
         }
 
         private void Framework_Update(Framework framework)
         {
-
+            AutoFateSync();
         }
 
         private void ClientState_CfPop(object sender, ContentFinderCondition e)
@@ -63,13 +78,22 @@ namespace EmiThingsPlugin
             }
         }
 
-        
+        #region Utils
+
+        private void ExecuteCommand(string command)
+        {
+            string sanitizedCommand = XIVChat.SanitiseText(command);
+
+            XIVChat.SendMessage(sanitizedCommand);
+        }
+
+        #endregion
 
         #region Private functions
 
         private void InitUI()
         {
-            var window = this.pluginInterface.Create<PluginWindow>(this.config);
+            var window = this.pluginInterface.Create<PluginConfigWindow>(this.config);
 
             if (window is not null)
             {
@@ -86,7 +110,6 @@ namespace EmiThingsPlugin
 
         #endregion
 
-
         #region IDisposable Support
         protected virtual void Dispose(bool disposing)
         {
@@ -102,6 +125,8 @@ namespace EmiThingsPlugin
 
         public void Dispose()
         {
+            this.XIVCommonBase.Dispose();
+
             Dispose(true);
             GC.SuppressFinalize(this);
         }

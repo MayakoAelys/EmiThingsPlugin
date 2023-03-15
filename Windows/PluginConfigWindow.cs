@@ -2,29 +2,33 @@
 using ImGuiNET;
 using System.Numerics;
 
-namespace EmiThingsPlugin
+namespace EmiThingsPlugin.Windows
 {
-    public class PluginWindow : Window
+    public class PluginConfigWindow : Window
     {
-        public const string WindowName = "WindowConfig";
-        public const string MainTabBarName = "WindowConfigMainTabBar";
+        public const string WindowName = "EmiThings Configuration";
+        public const string MainTabBarName = "PluginConfigWindowMainTabBar";
 
         private string ConfigTestString;
         private bool ConfigTestBool;
 
+        private bool ConfigAutoFateSync;
+
         private Configuration Config;
 
-        public PluginWindow(Configuration config) : base(WindowName)
+        public PluginConfigWindow(Configuration config) : base(WindowName)
         {
             IsOpen = false;
             Size = new Vector2(810, 520);
             SizeCondition = ImGuiCond.FirstUseEver;
-            
+
             // Init config
             Config = config;
 
-            this.ConfigTestString = Config.TestString ?? string.Empty;
-            this.ConfigTestBool = Config.TestBool;
+            ConfigTestString = Config.TestString ?? string.Empty;
+            ConfigTestBool = Config.TestBool;
+
+            ConfigAutoFateSync = Config.AutoFateSync;
         }
 
         public override void Draw()
@@ -55,6 +59,7 @@ namespace EmiThingsPlugin
         private void DrawConfig()
         {
             ImGui.Text("Hello, world!");
+            ImGui.Text("Yes, this is some tests.");
             ImGui.Text($"Test mouse pos: {ImGui.GetMousePos()}");
             ImGui.Text($"TestString: {Config.TestString}");
             ImGui.Text($"TestStringWithDefaultValue: {Config.TestStringWithDefaultValue}");
@@ -65,10 +70,10 @@ namespace EmiThingsPlugin
 
             ImGui.Separator();
 
+            ImGui.Text("Now the real things.");
             ImGui.Text("");
-            ImGui.Text("Update TestString:");
-            ImGui.InputText(string.Empty, ref ConfigTestString, 25);
-            ImGui.Checkbox("TestBool", ref ConfigTestBool);
+            ImGui.Checkbox("Auto FATE sync?", ref ConfigAutoFateSync);
+            ImGui.Text($"Auto FATE sync is {(Config.AutoFateSync ? "enabled" : "disabled")}");
 
             ImGui.Text("");
 
@@ -78,8 +83,7 @@ namespace EmiThingsPlugin
 
             if (ImGui.Button("Save config"))
             {
-                Config.TestString = ConfigTestString;
-                Config.TestBool = ConfigTestBool;
+                Config.AutoFateSync = ConfigAutoFateSync;
             }
         }
 
@@ -120,7 +124,7 @@ namespace EmiThingsPlugin
 
         private void DrawAbout()
         {
-            ImGui.Text("This is just a test plugin");
+            ImGui.Text("Hello u cutie uwu");
         }
     }
 }

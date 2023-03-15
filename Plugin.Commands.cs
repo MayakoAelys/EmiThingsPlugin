@@ -1,6 +1,7 @@
 ﻿using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
 using EmiThingsPlugin.Attributes;
+using EmiThingsPlugin.Windows;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,12 +13,13 @@ namespace EmiThingsPlugin
 {
     public partial class Plugin : IDalamudPlugin
     {
-        [Command("/emiConfig")]
+        //[Aliases("/emiConfig")]
+        [Command("/emiconfig")]
         [HelpMessage("Open the configuration window")]
         public void TestConfig(string commands, string args)
         {
             Window pluginWindow = 
-                windowSystem.Windows.First(w => w.WindowName.Equals(PluginWindow.WindowName));
+                windowSystem.Windows.First(w => w.WindowName.Equals(PluginConfigWindow.WindowName));
 
             if (!pluginWindow.IsOpen)
                 pluginWindow.Toggle();
@@ -54,7 +56,7 @@ namespace EmiThingsPlugin
         //    this.chat.Print($"commands: {commands}");
         //    this.chat.Print($"args: {args}");
 
-        //    using (var xivcommonbase = new XivCommonBase())
+        //    using (var xivcommonbase = new XIVCommonBase())
         //    {
         //        xivcommonbase.Functions.Chat.SendMessage("/afk");
 

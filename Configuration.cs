@@ -8,7 +8,9 @@ namespace EmiThingsPlugin
     {
         int IPluginConfiguration.Version { get; set; }
 
-        #region Saved configuration values
+        public bool AutoFateSync { get; set; } = false;
+
+        #region Test configuration values
         
         public string TestString { get; set; }
         public string TestStringWithDefaultValue { get; set; } = "Default value";
