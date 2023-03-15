@@ -8,13 +8,13 @@ using Dalamud.Game.Text.SeStringHandling;
 using Dalamud.Interface.Windowing;
 using Dalamud.Logging;
 using Dalamud.Plugin;
-using DalamudPluginProjectTemplate.Attributes;
+using EmiThingsPlugin.Attributes;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Linq;
 using XivCommon;
 
-namespace DalamudPluginProjectTemplate
+namespace EmiThingsPlugin
 {
     public class Plugin : IDalamudPlugin
     {
@@ -28,7 +28,7 @@ namespace DalamudPluginProjectTemplate
         private readonly FateTable fateTable;
         private readonly Framework framework;
 
-        public string Name => "Your Plugin's Display Name";
+        public string Name => "Emi things and tests";
 
         public Plugin(
             DalamudPluginInterface pi,

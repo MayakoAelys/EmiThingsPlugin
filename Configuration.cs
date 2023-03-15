@@ -2,7 +2,7 @@
 using Dalamud.Plugin;
 using System.Collections.Generic;
 
-namespace DalamudPluginProjectTemplate
+namespace EmiThingsPlugin
 {
     public class Configuration : IPluginConfiguration
     {
