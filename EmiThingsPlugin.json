@@ -2,6 +2,8 @@
   "Name": "EmiThings",
   "Author": "Emi",
   "Description": "Just a test to put my hands in plugin dev",
-  "RepoUrl": "",
-  "Tags": []
+  "RepoUrl": "https://github.com/MayakoAelys/EmiThingsPlugin",
+  "Tags": [
+    "emi"
+  ]
 }

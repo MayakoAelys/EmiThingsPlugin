@@ -3,7 +3,7 @@
 	<PropertyGroup>
 		<TargetFramework>net7.0</TargetFramework>
 		<LangVersion>9.0</LangVersion>
-		<Version>1.0.0.0</Version>
+		<Version>0.1.0</Version>
 	</PropertyGroup>
 
 	<PropertyGroup>
@@ -49,6 +49,12 @@
 			<HintPath>$(AppData)\XIVLauncher\addon\Hooks\dev\FFXIVClientStructs.dll</HintPath>
 			<Private>false</Private>
 		</Reference>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Update="EmiThingsPlugin.json">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
 	</ItemGroup>
 
 </Project>
