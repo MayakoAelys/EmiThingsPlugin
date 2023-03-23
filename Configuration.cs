@@ -9,9 +9,10 @@ namespace EmiThingsPlugin
         int IPluginConfiguration.Version { get; set; }
 
         public bool AutoFateSync { get; set; } = false;
+        public bool AutoFateSyncAutoStance { get; set; } = false;
 
         #region Test configuration values
-        
+
         public string TestString { get; set; }
         public string TestStringWithDefaultValue { get; set; } = "Default value";
         public int TestInt { get; set; }

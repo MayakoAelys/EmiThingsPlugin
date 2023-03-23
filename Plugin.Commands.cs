@@ -19,7 +19,7 @@ namespace EmiThingsPlugin
         public void TestConfig(string commands, string args)
         {
             Window pluginWindow = 
-                windowSystem.Windows.First(w => w.WindowName.Equals(PluginConfigWindow.WindowName));
+                WindowSystem.Windows.First(w => w.WindowName.Equals(PluginConfigWindow.WindowName));
 
             if (!pluginWindow.IsOpen)
                 pluginWindow.Toggle();
@@ -31,12 +31,12 @@ namespace EmiThingsPlugin
         //{
         //    // You may want to assign these references to private variables for convenience.
         //    // Keep in mind that the local player does not exist until after logging in.
-        //    var world = this.clientState.LocalPlayer?.CurrentWorld.GameData;
+        //    var world = this.ClientState.LocalPlayer?.CurrentWorld.GameData;
 
-        //    //this.chat.Print($"Hello, {world?.Name}!");
+        //    //this.Chat.Print($"Hello, {world?.Name}!");
         //    //PluginLog.Log("Message sent successfully.");
 
-        //    Window pluginWindow = this.windowSystem.Windows.First(w => w.WindowName.Equals(PluginWindow.WindowName));
+        //    Window pluginWindow = this.WindowSystem.Windows.First(w => w.WindowName.Equals(PluginWindow.WindowName));
 
         //    if (!pluginWindow.IsOpen)
         //        pluginWindow.Toggle();
@@ -46,15 +46,15 @@ namespace EmiThingsPlugin
         //[HelpMessage("Example 2 help message")]
         //public void Example2Command(string commands, string args)
         //{
-        //    this.chat.Print($"Hello {this.clientState.LocalPlayer.Name} du serveur {this.clientState.LocalPlayer.HomeWorld.GameData.Name}");
+        //    this.Chat.Print($"Hello {this.ClientState.LocalPlayer.Name} du serveur {this.ClientState.LocalPlayer.HomeWorld.GameData.Name}");
         //}
 
         //[Command("/testChat")]
         //[HelpMessage("test")]
         //public void TestChat(string commands, string args)
         //{
-        //    this.chat.Print($"commands: {commands}");
-        //    this.chat.Print($"args: {args}");
+        //    this.Chat.Print($"commands: {commands}");
+        //    this.Chat.Print($"args: {args}");
 
         //    using (var xivcommonbase = new XIVCommonBase())
         //    {
@@ -68,8 +68,8 @@ namespace EmiThingsPlugin
         //[Command("/testConfig")]
         //public void TestConfig(string commands, string args)
         //{
-        //    this.chat.Print($"TestString: {this.config.TestString}");
-        //    // this.config.CoolText = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); // rewrite the config without needing to save
+        //    this.Chat.Print($"TestString: {this.Config.TestString}");
+        //    // this.Config.CoolText = DateTime.Now.ToString("yyyy-MM-dd hh:mm:ss"); // rewrite the Config without needing to save
         //}
     }
 }
