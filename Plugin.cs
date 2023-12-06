@@ -7,6 +7,7 @@ using Dalamud.Game.Command;
 using Dalamud.Game.Gui;
 using Dalamud.Interface.Windowing;
 using Dalamud.Plugin;
+using Dalamud.Plugin.Services;
 using EmiThingsPlugin.Windows;
 using Lumina.Excel.GeneratedSheets;
 using System;
@@ -21,17 +22,17 @@ namespace EmiThingsPlugin
     public partial class Plugin : IDalamudPlugin
     {
         private readonly DalamudPluginInterface PluginInterface;
-        private readonly ChatGui Chat;
-        private readonly ClientState ClientState;
+        private readonly IChatGui Chat;
+        private readonly IClientState ClientState;
 
         private readonly PluginCommandManager<Plugin> CommandManager;
         private readonly Configuration Config;
         private readonly WindowSystem WindowSystem;
-        private readonly FateTable FateTable;
-        private readonly Framework Framework;
-        private readonly SigScanner SigScanner;
-        private readonly PartyList PartyList;
-        private readonly Conditions.Condition Condition;
+        private readonly IFateTable FateTable;
+        private readonly IFramework Framework;
+        private readonly ISigScanner SigScanner;
+        private readonly IPartyList PartyList;
+        private readonly ICondition Condition;
 
         protected XivCommonBase XIVCommonBase;
         protected Chat XIVChat;
@@ -40,14 +41,14 @@ namespace EmiThingsPlugin
 
         public Plugin(
             DalamudPluginInterface pi,
-            CommandManager commands,
-            ChatGui chat,
-            ClientState clientState,
-            FateTable fateTable,
-            Framework framework,
-            SigScanner sigScanner,
-            PartyList partyList,
-            Conditions.Condition condition)
+            ICommandManager commands,
+            IChatGui chat,
+            IClientState clientState,
+            IFateTable fateTable,
+            IFramework framework,
+            ISigScanner sigScanner,
+            IPartyList partyList,
+            ICondition condition)
         {
             this.PluginInterface = pi;
             this.Chat            = chat;
@@ -58,10 +59,10 @@ namespace EmiThingsPlugin
             this.PartyList       = partyList;
             this.Condition       = condition;
 
-            this.XIVCommonBase = new XivCommonBase();
+            this.XIVCommonBase = new XivCommonBase(pi);
             this.XIVChat = this.XIVCommonBase.Functions.Chat;
 
-            this.ClientState.CfPop += ClientState_CfPop;
+            //this.ClientState.CfPop += ClientState_CfPop;
 
             this.Config = (Configuration) PluginInterface.GetPluginConfig() ?? this.PluginInterface.Create<Configuration>();
             this.WindowSystem = new WindowSystem(typeof(Plugin).AssemblyQualifiedName);
@@ -73,18 +74,18 @@ namespace EmiThingsPlugin
             InitAutoFateSync();
         }
 
-        private void Framework_Update(Framework framework)
+        private void Framework_Update(IFramework framework)
         {
             AutoFateSyncUpdate();
         }
 
-        private void ClientState_CfPop(object sender, ContentFinderCondition e)
-        {
-            if (e.AllianceRoulette)
-            {
+        //private void ClientState_CfPop(object sender, ContentFinderCondition e)
+        //{
+        //    if (e.AllianceRoulette)
+        //    {
 
-            }
-        }
+        //    }
+        //}
 
         #region Utils
 

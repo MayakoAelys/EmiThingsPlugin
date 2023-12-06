@@ -4,12 +4,12 @@ using Dalamud.Game.ClientState.Conditions;
 using Dalamud.Game.ClientState.Resolvers;
 using Dalamud.Game.Gui;
 using Dalamud.Logging;
+using Dalamud.Plugin.Services;
 using EmiThingsPlugin.Models;
 using FFXIVClientStructs.FFXIV.Client.UI;
 using Lumina.Excel.GeneratedSheets;
 using System;
 using System.Runtime.InteropServices;
-using XivCommon.Functions;
 
 namespace EmiThingsPlugin
 {
@@ -113,7 +113,7 @@ namespace EmiThingsPlugin
             InFateStanceLaunched = true;
         }
 
-        private string GetStanceName(ClientState clientState, ExcelResolver<ClassJob> classJob)
+        private string GetStanceName(IClientState clientState, ExcelResolver<ClassJob> classJob)
         {
             string stanceName = null;
 

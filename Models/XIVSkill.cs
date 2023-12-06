@@ -1,5 +1,7 @@
 ﻿using Dalamud.Game.ClientState;
+using Dalamud.Plugin.Services;
 using System;
+
 
 namespace EmiThingsPlugin.Models
 {
@@ -14,7 +16,7 @@ namespace EmiThingsPlugin.Models
             this.FR = FR;
         }
 
-        public string GetSkillName(ClientState clientState)
+        public string GetSkillName(IClientState clientState)
         {
             switch (clientState.ClientLanguage)
             {

@@ -3,10 +3,11 @@
   "InternalName": "EmiThings",
   "Author": "Emi",
   "Description": "Just a test to put my hands in plugin dev",
-  //"RepoUrl": "https://github.com/MayakoAelys/EmiThingsPlugin",
+  "AssemblyVersion": "0.2.0.0",
+  "IconUrl": "https://raw.githubusercontent.com/MayakoAelys/EmiDalamudPlugins/main/EmiThings.png",
   "Tags": [
     "emi"
   ],
-  "DalamudApiLevel": 8,
+  "DalamudApiLevel": 9,
   "RepoUrl": "https://github.com/MayakoAelys/EmiDalamudPlugins"
 }
